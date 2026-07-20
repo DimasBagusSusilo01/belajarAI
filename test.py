@@ -1,8 +1,13 @@
 import joblib
 
 # Load kembali model dan vectorizer yang sudah disimpan
+<<<<<<< HEAD
 model = joblib.load('/home/dimas/0MyNLP/model_emosi_ver2.pkl')
 vectorizer = joblib.load('/home/dimas/0MyNLP/vectorizer._ver2.pkl')
+=======
+model = joblib.load('model_emosi.pkl')
+vectorizer = joblib.load('vectorizer.pkl')
+>>>>>>> 572caa218b085c42544c04a5c2eab596cfe938cb
 
 def tebak_emosi(kalimat_baru):
     # Ubah kalimat baru menjadi bentuk angka menggunakan vectorizer yang sama
@@ -23,4 +28,8 @@ def tebak_emosi(kalimat_baru):
 
 
 tebak_emosi("Gabut banget asli, ra reti arep nopo")
+<<<<<<< HEAD
 tebak_emosi("MBOH AH!  aku ora gumun. Sak karepmu")
+=======
+tebak_emosi("MBOH AH!  aku ora gumun")
+>>>>>>> 572caa218b085c42544c04a5c2eab596cfe938cb

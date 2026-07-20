@@ -6,7 +6,11 @@ from sklearn.metrics import classification_report, accuracy_score
 import joblib
 
 # 1. Memuat Dataset
+<<<<<<< HEAD
 df = pd.read_csv('/home/dimas/0MyNLP/envnlp/dataset.csv')
+=======
+df = pd.read_csv('dataset.csv')
+>>>>>>> 572caa218b085c42544c04a5c2eab596cfe938cb
 
 # Split data menjadi fitur (X) dan target/label (y)
 X = df['text']
@@ -32,6 +36,11 @@ print(f"Akurasi Model: {accuracy_score(y_test, y_pred) * 100:.2f}%\n")
 print(classification_report(y_test, y_pred))
 
 # 6. Menyimpan Model dan Vectorizer agar bisa dipakai di Web/FastAPI nanti
+<<<<<<< HEAD
 joblib.dump(model, 'model_emosi_ver2.pkl')
 joblib.dump(vectorizer, 'vectorizer._ver2.pkl')
+=======
+joblib.dump(model, 'model_emosi.pkl')
+joblib.dump(vectorizer, 'vectorizer.pkl')
+>>>>>>> 572caa218b085c42544c04a5c2eab596cfe938cb
 print("Model berhasil dilatih dan disimpan!")

@@ -1,8 +1,13 @@
 import joblib
 
 try:
+<<<<<<< HEAD
     model = joblib.load('/home/dimas/0MyNLP/model_emosi_ver2.pkl')
     vectorizer = joblib.load('/home/dimas/0MyNLP/vectorizer._ver2.pkl')
+=======
+    model = joblib.load('model_emosi.pkl')
+    vectorizer = joblib.load('vectorizer.pkl')
+>>>>>>> 572caa218b085c42544c04a5c2eab596cfe938cb
     print("✓ Model dan Vectorizer berhasil dimuat!\n")
 except FileNotFoundError:
     print("✗ Error: File .pkl tidak ditemukan. Jalankan skrip training dulu!")
