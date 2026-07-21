@@ -5,7 +5,7 @@ import torch.nn.functional as F
 
 # Konfigurasi harus SAMA dengan saat training
 EMBEDDING_DIM = 64
-HIDDEN_DIM = 64
+HIDDEN_DIM = 128
 MAX_LENGTH = 20  # Batas maksimum panjang respon
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -22,7 +22,7 @@ def load_resources():
 
     return tokenizer, model
 
-def generate_response(prompt, tokenizer, model, temperature=0.7, top_k=5):
+def generate_response(prompt, tokenizer, model, temperature=0.6, top_k=5):
     # Prepare Input
     input_ids = tokenizer.encode(prompt)
     input_tensor = torch.tensor([input_ids], dtype=torch.long).to(DEVICE)

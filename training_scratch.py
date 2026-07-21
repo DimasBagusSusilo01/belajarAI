@@ -5,10 +5,10 @@ from dataset import ChatDataset
 from model import ChatModel
 
 # 1. Hyperparameters & Konfigurasi
-BATCH_SIZE = 4
+BATCH_SIZE = 7
 EMBEDDING_DIM = 64   # Dinaikkan dari 64 agar daya tampung makna kata lebih kaya
-HIDDEN_DIM = 64     # Dinaikkan dari 128 agar memori sekuensial LSTM lebih kuat
-EPOCHS = 40
+HIDDEN_DIM = 128     # Dinaikkan dari 128 agar memori sekuensial LSTM lebih kuat
+EPOCHS = 70
 LEARNING_RATE = 0.001
 MAX_NORM = 1.0        # Batas gradien clipping
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
