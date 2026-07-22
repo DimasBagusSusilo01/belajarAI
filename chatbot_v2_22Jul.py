@@ -162,7 +162,7 @@ if __name__ == "__main__":
     model = DynamicChatbot(tokenizer.vocab_size, EMBEDDING_DIM, HIDDEN_DIM)
 
     # Cek apakah file model .pth sudah ada sebelumnya
-    model_filename = "chatbot_model.pth"
+    model_filename = "chatbot_mandiri.pth"
     if os.path.exists(model_filename):
         muat_model = input(f"File '{model_filename}' ditemukan. Ingin langsung memuatnya tanpa training ulang? (y/n): ")
         if muat_model.lower() == 'y':
