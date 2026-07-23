@@ -22,7 +22,7 @@ def load_resources():
 
     return tokenizer, model
 
-def generate_response(prompt, tokenizer, model, temperature=0.6, top_k=5):
+def generate_response(prompt, tokenizer, model, temperature=0.8, top_k=20):
     # Prepare Input
     input_ids = tokenizer.encode(prompt)
     input_tensor = torch.tensor([input_ids], dtype=torch.long).to(DEVICE)
