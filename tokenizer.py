@@ -8,7 +8,10 @@ class Tokenizer:
             "<PAD>": 0,
             "<SOS>": 1,
             "<EOS>": 2,
-            "<UNK>": 3
+            "<UNK>": 3,
+            "<USER>":4,
+            "<BOT>":5,
+            "<EMOTION>":6
         }
 
         self.idx2word = {
