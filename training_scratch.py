@@ -5,10 +5,10 @@ from dataset import ChatDataset
 from model import ChatModel
 
 # 1. Hyperparameters & Konfigurasi
-BATCH_SIZE = 8
-EMBEDDING_DIM = 6   # Dinaikkan dari 64 agar daya tampung makna kata lebih kaya
-HIDDEN_DIM = 24     # Dinaikkan dari 128 agar memori sekuensial LSTM lebih kuat
-EPOCHS = 40
+BATCH_SIZE = 16
+EMBEDDING_DIM = 64  # Dinaikkan dari 64 agar daya tampung makna kata lebih kaya
+HIDDEN_DIM = 128     # Dinaikkan dari 128 agar memori sekuensial LSTM lebih kuat
+EPOCHS = 80
 LEARNING_RATE = 0.001
 MAX_NORM = 1.0        # Batas gradien clipping
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -37,7 +37,7 @@ def main():
     optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=1e-4)
 
     # Scheduler: Menurunkan LR sebesar 10% setiap 30 epoch
-    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=8, gamma=0.3)
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=25, gamma=0.5)
 
     # 4. Proses Training Loop
     print("\n--- Memulai Training ---")
