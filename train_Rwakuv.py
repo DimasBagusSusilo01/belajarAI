@@ -19,7 +19,7 @@ dataloader = DataLoader(
 )
 model = Rwkv()
 
-criterion = nn.CrossEntropyLoss()
+criterion = nn.CrossEntropyLoss(ignore_index=-100)
 
 optimizer = torch.optim.Adam(
 	model.parameters(),

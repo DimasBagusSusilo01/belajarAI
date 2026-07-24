@@ -20,23 +20,32 @@ class ChannelMix(nn.Module):
 		super().__init__()
 		self.fc1 = nn.Linear(dim, hidden_dim)
 		self.fc2 = nn.Linear(hidden_dim,dim)
-		self.relu = nn.ReLU()
+		self.gelu = nn.GELU()
 		
 	def forward(self, x):
 			x = self.fc1(x)
-			x = self.relu(x)
+			x = self.gelu(x)
 			x = self.fc2(x)
 			return x
 			
 class Rwkvblock(nn.Module):
 	def __init__(self, dim, hidden_dim):
 		super().__init__()
+		
+		self.ln1 = nn.LayerNorm(dim)
 		self.timemix = TimeMix(dim)
+		
+		self.ln2 = nn.LayerNorm(dim)
 		self.channelmix = ChannelMix(dim, hidden_dim)
 		
 	def forward(self, x):
 		residual = x
+		x = self.ln1(x)
 		x = self.timemix(x)
+		x = x + residual
+		
+		residual = x
+		x = self.ln2(x)
 		x = self.channelmix(x)
 		x = x + residual
 		return x

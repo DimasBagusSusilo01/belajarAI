@@ -23,8 +23,15 @@ class ChatDataset(Dataset):
 				+ emosi)
 				
 			encoded = self.tokenizer.encode(dialog)
+
 			input_ids = encoded[:-1]
 			target_ids = encoded[1:]
+
+			bot_token = self.tokenizer.word2idx["<BOT>"]
+			bot_index = encoded.index(bot_token)
+
+			for i in range(bot_index):
+				target_ids[i] = -100
 			input_ids = input_ids[:MAX_LEN]
 			target_ids = target_ids[:MAX_LEN]
 
