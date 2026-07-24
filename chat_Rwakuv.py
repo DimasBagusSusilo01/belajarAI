@@ -20,14 +20,21 @@ while True:
 		break
 	 
 	dialog = f"<USER> {text} <BOT>"
-	encoded = tokenizer.encode(dialog)
-	input_ids = torch.tensor(
-	encoded,
-	dtype=torch.long).unsqueeze(0)
-	
-	with torch.no_grad():
-		output = model(input_ids)
-		next_token = torch.argmax(
-			output[0, -1]).item()
-		jawaban = tokenizer.decode([next_token])
-		print("Bot :", jawaban)
+	encoded = tokenizer.encode(dialog, add_eos=False)
+	generated = encoded.copy()
+	for i in range(MAX_NEW_TOKENS):
+		input_ids = torch.tensor(
+			generated,
+			dtype=torch.long
+		).unsqueeze(0)
+		with torch.no_grad():
+			output = model(input_ids)
+			logits = output[0, -1]
+			values, indices = torch.topk(logits, TOP_K)
+			prob = torch.softmax(values,dim=-1)
+			next_token = indices[torch.multinomial(prob, 1)].item()
+			if next_token == tokenizer.word2idx["<EOS>"]:
+				break
+			generated.append(next_token)
+			jawaban = tokenizer.decode(generated[len(encoded):])
+			print("Bot :", jawaban)

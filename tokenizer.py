@@ -2,121 +2,122 @@ import pandas as pd
 import json
 
 class Tokenizer:
-    def __init__(self):
-        # Token khusus
-        self.word2idx = {
-            "<PAD>": 0,
-            "<SOS>": 1,
-            "<EOS>": 2,
-            "<UNK>": 3,
-            "<USER>":4,
-            "<BOT>":5,
-            "<EMOTION>":6
-        }
+	def __init__(self):
+		# Token khusus
+		self.word2idx = {
+			"<PAD>": 0,
+			"<SOS>": 1,
+			"<EOS>": 2,
+			"<UNK>": 3,
+			"<USER>":4,
+			"<BOT>":5,
+			"<EMOTION>":6
+		}
 
-        self.idx2word = {
-            0: "<PAD>",
-            1: "<SOS>",
-            2: "<EOS>",
-            3: "<UNK>"
-        }
+		self.idx2word = {
+			0: "<PAD>",
+			1: "<SOS>",
+			2: "<EOS>",
+			3: "<UNK>"
+		}
 
-    # Membersihkan teks
-    def clean(self, text):
-        return str(text).strip()
+	# Membersihkan teks
+	def clean(self, text):
+		return str(text).strip()
 
-    # Membuat vocabulary
-    def build_vocab(self, dataframe):
+	# Membuat vocabulary
+	def build_vocab(self, dataframe):
 
-        sentences = []
+		sentences = []
 
-        sentences.extend(dataframe["text"].tolist())
-        sentences.extend(dataframe["respon"].tolist())
+		sentences.extend(dataframe["text"].tolist())
+		sentences.extend(dataframe["respon"].tolist())
 
-        words = []
+		words = []
 
-        for sentence in sentences:
+		for sentence in sentences:
 
-            sentence = self.clean(sentence)
+			sentence = self.clean(sentence)
 
-            tokens = sentence.split()
+			tokens = sentence.split()
 
-            words.extend(tokens)
+			words.extend(tokens)
 
-        vocab = sorted(set(words))
+		vocab = sorted(set(words))
 
-        for word in vocab:
-            if word not in self.word2idx:
+		for word in vocab:
+			if word not in self.word2idx:
 
-                index = len(self.word2idx)
+				index = len(self.word2idx)
 
-                self.word2idx[word] = index
-                self.idx2word[index] = word
+				self.word2idx[word] = index
+				self.idx2word[index] = word
 
-        print("Vocabulary berhasil dibuat")
-        print("Jumlah kata :", len(self.word2idx))
+		print("Vocabulary berhasil dibuat")
+		print("Jumlah kata :", len(self.word2idx))
 
-    # Mengubah kalimat menjadi angka
-    def encode(self, sentence):
+	# Mengubah kalimat menjadi angka
+	def encode(self, sentence, add_eos=True):
 
-        sentence = self.clean(sentence)
+		sentence = self.clean(sentence)
 
-        tokens = sentence.split()
+		tokens = sentence.split()
 
-        encoded = [self.word2idx["<SOS>"]]
+		encoded = [self.word2idx["<SOS>"]]
 
-        for token in tokens:
-            encoded.append(
-                self.word2idx.get(token, self.word2idx["<UNK>"])
-            )
+		for token in tokens:
+			encoded.append(
+				self.word2idx.get(token, self.word2idx["<UNK>"])
+			)
 
-        encoded.append(self.word2idx["<EOS>"])
+		if add_eos:
+			encoded.append(self.word2idx["<EOS>"])
 
-        return encoded
+		return encoded
 
-    # Mengubah angka menjadi kalimat
-    def decode(self, encoded):
+	# Mengubah angka menjadi kalimat
+	def decode(self, encoded):
 
-        words = []
+		words = []
 
-        for token in encoded:
+		for token in encoded:
 
-            word = self.idx2word.get(token, "<UNK>")
+			word = self.idx2word.get(token, "<UNK>")
 
-            if word in ["<PAD>", "<SOS>", "<EOS>"]:
-                continue
+			if word in ["<PAD>", "<SOS>", "<EOS>"]:
+				continue
 
-            words.append(word)
+			words.append(word)
 
-        return " ".join(words)
+		return " ".join(words)
 
-    # Simpan vocabulary
-    def save(self, filename):
+	# Simpan vocabulary
+	def save(self, filename):
 
-        with open(filename, "w", encoding="utf-8") as f:
+		with open(filename, "w", encoding="utf-8") as f:
 
-            json.dump(
-                self.word2idx,
-                f,
-                ensure_ascii=False,
-                indent=4
-            )
+			json.dump(
+				self.word2idx,
+				f,
+				ensure_ascii=False,
+				indent=4
+			)
 
-        print("Vocabulary disimpan")
+		print("Vocabulary disimpan")
 
-    # Load vocabulary
-    def load(self, filename):
+	# Load vocabulary
+	def load(self, filename):
 
-        with open(filename, "r", encoding="utf-8") as f:
+		with open(filename, "r", encoding="utf-8") as f:
 
-            self.word2idx = json.load(f)
+			self.word2idx = json.load(f)
 
-        self.idx2word = {
-            int(v): k
-            for k, v in self.word2idx.items()
-        }
+		self.idx2word = {
+			int(v): k
+			for k, v in self.word2idx.items()
+		}
 
-        print("Vocabulary berhasil dimuat")
+		print("Vocabulary berhasil dimuat")
 
 
 # ===========================
