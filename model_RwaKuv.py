@@ -35,8 +35,10 @@ class Rwkvblock(nn.Module):
 		self.channelmix = ChannelMix(dim, hidden_dim)
 		
 	def forward(self, x):
+		residual = x
 		x = self.timemix(x)
 		x = self.channelmix(x)
+		x = x + residual
 		return x
 
 class Rwkv(nn.Module):

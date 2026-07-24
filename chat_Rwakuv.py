@@ -37,4 +37,4 @@ while True:
 				break
 			generated.append(next_token)
 			jawaban = tokenizer.decode(generated[len(encoded):])
-			print("Bot :", jawaban)
+	print("Bot :", jawaban)
